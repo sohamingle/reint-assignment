@@ -31,7 +31,7 @@ export default function Page() {
   const debounceRef = useRef<ReturnType<typeof setTimeout>>(null)
 
   const fetchData = useCallback(async () => {
-    if (!startTime || !endTime || !horizonHours || loading) return
+    if (!startTime || !endTime || !horizonHours) return
     const startISO = fromZonedTime(startTime, "Europe/London").toISOString()
     const endISO = fromZonedTime(endTime, "Europe/London").toISOString()
 
@@ -48,7 +48,7 @@ export default function Page() {
     } finally {
       setLoading(false)
     }
-  }, [startTime, endTime, horizonHours, loading])
+  }, [startTime, endTime, horizonHours])
 
   useEffect(() => {
     if (debounceRef.current) clearTimeout(debounceRef.current)
