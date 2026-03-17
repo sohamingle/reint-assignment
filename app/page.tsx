@@ -78,8 +78,15 @@ export default function Page() {
                   id="start-time"
                   type="datetime-local"
                   value={startTime}
+                  min="2025-01-01T00:00"
                   step={1800}
-                  onChange={(e) => setStartTime(e.target.value)}
+                  onChange={(e) => {
+                    const newStart = e.target.value
+                    setStartTime(newStart)
+                    if (endTime && newStart > endTime) {
+                      setEndTime(newStart)
+                    }
+                  }}
                   className="w-[220px]"
                 />
               </div>
@@ -90,8 +97,16 @@ export default function Page() {
                   id="end-time"
                   type="datetime-local"
                   value={endTime}
+                  min={startTime || "2025-01-01T00:00"}
                   step={1800}
-                  onChange={(e) => setEndTime(e.target.value)}
+                  onChange={(e) => {
+                    const newEnd = e.target.value
+                    if (startTime && newEnd < startTime) {
+                      setEndTime(startTime)
+                    } else {
+                      setEndTime(newEnd)
+                    }
+                  }}
                   className="w-[220px]"
                 />
               </div>
